@@ -15,7 +15,7 @@ The React frontend is served by the .NET 8 API in production. In development bot
 ## Quick Start
 
 ```bash
-git clone <repo-url> arc && cd arc
+git clone https://github.com/Koech01/arc arc && cd arc
 
 # 1. Install dependencies and create .env
 ./setup.sh
@@ -32,7 +32,7 @@ make dev
 
 - Frontend (Vite): http://localhost:5173
 - Backend (API + Swagger): http://localhost:5266
-- Default admin: `admin@arc.com` / `Str0ng#Arc$99` — change after first login
+- Default admin: `admin@arc.com` / `Str0ng#Arc$99` - change after first login
 
 ## Project Structure
 
