@@ -1,0 +1,26 @@
+@font-face {
+  font-style: normal;
+  font-weight: normal;
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Regular.ttf') format('truetype'); 
+}
+
+html, body, #root{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-family: 'Geist', sans-serif;
+}
+
+.App {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist', sans-serif;
+}

@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.local
+.env.production
+
+# .NET
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.user
+.vs/
+.vscode/
+*.db
+*.db-shm
+*.db-wal
+publish/
+backend/src/Arc.Api/wwwroot/
+
+# Node
+node_modules/
+dist/
+dist-ssr
+*.local
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+postgres_data/
