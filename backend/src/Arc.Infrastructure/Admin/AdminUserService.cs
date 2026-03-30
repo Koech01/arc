@@ -106,7 +106,7 @@ public sealed class AdminUserService : IAdminUserService
         await _auditLogger.LogAsync(new AdminAuditEvent(actingAdminId, AdminAuditAction.DeletedUser, DateTime.UtcNow, userId.ToString()), cancellationToken);
     }
 
-    // ── private helpers ───────────────────────────────────────────────────────
+    // private helpers 
 
     private async Task<User> RequireUserAsync(Guid userId, CancellationToken cancellationToken)
     {

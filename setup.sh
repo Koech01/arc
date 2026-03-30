@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "── Arc Setup ──────────────────────────────────────────"
+echo "── Arc Setup ──"
 
 # .env
 if [ ! -f .env ]; then

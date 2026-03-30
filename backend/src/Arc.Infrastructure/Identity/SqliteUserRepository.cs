@@ -159,7 +159,7 @@ public sealed class SqliteUserRepository : IUserRepository
         return (users, total);
     }
 
-    // ── private helpers ───────────────────────────────────────────────────────
+    // private helpers
 
     private static string SelectColumns(string predicate) => $@"
         SELECT Id, Username, Email, PasswordHash, Role, CreatedAt, IsActive,

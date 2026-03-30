@@ -82,7 +82,7 @@ public sealed class SqliteExecutionTemplateStore : IExecutionTemplateStore
         }
     }
 
-    // ── Convenience overloads (no UserId) ────────────────────────────────────
+    // Convenience overloads (no UserId)
 
     public Task<ExecutionTemplate> CreateAsync(string name, string description, IReadOnlyList<WorkflowTask> tasks, string triggerType, string? llmConfigId = null)
         => CreateAsync(name, description, tasks, triggerType, UserId.Anonymous, llmConfigId);
@@ -99,7 +99,7 @@ public sealed class SqliteExecutionTemplateStore : IExecutionTemplateStore
     public Task<TemplateInstantiationResult?> InstantiateAsync(string templateName, Dictionary<string, string>? variables = null)
         => InstantiateAsync(templateName, UserId.Anonymous, variables);
 
-    // ── Interface implementations ─────────────────────────────────────────────
+    // Interface implementations
 
     public async Task<ExecutionTemplate> CreateAsync(string name, string description, IReadOnlyList<WorkflowTask> tasks, string triggerType, UserId userId, string? llmConfigId = null)
     {

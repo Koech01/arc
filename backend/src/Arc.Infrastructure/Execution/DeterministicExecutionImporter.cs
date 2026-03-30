@@ -25,7 +25,7 @@ public sealed class DeterministicExecutionImporter : IExecutionImporter
         _auditLogger = auditLogger ?? throw new ArgumentNullException(nameof(auditLogger));
     }
 
-    // ── Public interface ────────────────────────────────────────────────────
+    // Public interface 
 
     public async Task<ExecutionResult?> ImportFromJsonAsync(string jsonData, Guid importingUserId)
     {
@@ -136,7 +136,7 @@ public sealed class DeterministicExecutionImporter : IExecutionImporter
         }
     }
 
-    // ── Format detection & normalization ───────────────────────────────────
+    // Format detection & normalization 
 
     /// <summary>
     /// Parses the raw JSON into a canonical NormalizedImportPayload,
@@ -271,7 +271,7 @@ public sealed class DeterministicExecutionImporter : IExecutionImporter
             auditTrail);
     }
 
-    // ── Validation ──────────────────────────────────────────────────────────
+    // Validation 
 
     private static ValidationResult ValidateNormalized(NormalizedImportPayload payload)
     {
@@ -311,7 +311,7 @@ public sealed class DeterministicExecutionImporter : IExecutionImporter
             : ValidationResult.Valid();
     }
 
-    // ── Domain object construction ──────────────────────────────────────────
+    // Domain object construction
 
     private static ExecutionResult BuildExecutionResult(NormalizedImportPayload payload, Guid importingUserId)
     {
@@ -365,7 +365,7 @@ public sealed class DeterministicExecutionImporter : IExecutionImporter
         }
     }
 
-    // ── Helpers ─────────────────────────────────────────────────────────────
+    // Helpers 
 
     /// <summary>
     /// Resolves the output field regardless of whether it is a JSON object or a plain string.

@@ -117,7 +117,7 @@ public sealed class ExecutionImportBulkResponseDto
     public DateTime ImportedAtUtc { get; set; }
 }
 
-// ── Frontend-compatible import DTOs ──────────────────────────────────────────
+// Frontend-compatible import DTOs 
 // These match the shape the Arc frontend sends/expects for its import UI.
 
 /// <summary>

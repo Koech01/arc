@@ -32,7 +32,7 @@ make dev
 
 - Frontend (Vite): http://localhost:5173
 - Backend (API + Swagger): http://localhost:5266
-- Default admin: `admin@arc.com` / see `AdminAccount__Password` in `.env`
+- Default admin: `admin@arc.com` / `Str0ng#Arc$99` — change after first login
 
 ## Project Structure
 

@@ -80,7 +80,7 @@ public sealed record ExecutionQueryResult(
 
 public interface IExecutionResultStore
 {
-    // ── Convenience overloads - delegate to the canonical method ──────────────
+    // Convenience overloads - delegate to the canonical method 
     // Call sites that do not supply a workflow context continue to compile without
     // modification; the default implementations inject null context automatically.
 

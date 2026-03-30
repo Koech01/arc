@@ -76,8 +76,8 @@ public sealed class SqliteExecutionResultStore : IExecutionResultStore, IDisposa
         catch (SqliteException) { /* column already exists */ }
     }
 
-    // ── Convenience overloads - mirror the interface default implementations so callers
-    // using the concrete type (e.g. unit tests) also get the short-hand signatures. ──
+    // Convenience overloads - mirror the interface default implementations so callers
+    // using the concrete type (e.g. unit tests) also get the short-hand signatures. 
 
     public Task StoreAsync(string executionId, ExecutionResult result)
         => StoreAsync(executionId, result, DateTime.UtcNow, null);
@@ -88,7 +88,7 @@ public sealed class SqliteExecutionResultStore : IExecutionResultStore, IDisposa
     public Task StoreAsync(string executionId, ExecutionResult result, ExecutionWorkflowContext? workflowContext)
         => StoreAsync(executionId, result, DateTime.UtcNow, workflowContext);
 
-    // ── Canonical store method ──────────────────────────────────────────────
+    // Canonical store method 
 
     public async Task StoreAsync(
         string executionId,

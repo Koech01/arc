@@ -51,7 +51,7 @@ public sealed class AdminController : ControllerBase
         _logger = logger;
     }
 
-    // ── Dashboard ───────────────────────────────────────────────────────────────
+    // Dashboard 
 
     /// <summary>Returns aggregated dashboard statistics.</summary>
     [HttpGet("stats")]
@@ -70,7 +70,7 @@ public sealed class AdminController : ControllerBase
         });
     }
 
-    // ── Users (legacy flat list) ────────────────────────────────────────────────
+    // Users (legacy flat list) 
 
     /// <summary>Legacy non-paginated user list. Use GET /users/search for filtering.</summary>
     [HttpGet("users")]
@@ -87,7 +87,7 @@ public sealed class AdminController : ControllerBase
         }).ToList());
     }
 
-    // ── Users (paginated / filtered) ────────────────────────────────────────────
+    // Users (paginated / filtered) 
 
     /// <summary>Paginated, filterable user list.</summary>
     [HttpGet("users/search")]
@@ -199,7 +199,7 @@ public sealed class AdminController : ControllerBase
         )).ToList());
     }
 
-    // ── Executions ──────────────────────────────────────────────────────────────
+    // Executions 
 
     /// <summary>System-wide paginated execution list.</summary>
     [HttpGet("executions")]
@@ -225,7 +225,7 @@ public sealed class AdminController : ControllerBase
         ));
     }
 
-    // ── LLM Configurations ──────────────────────────────────────────────────────
+    // LLM Configurations
 
     /// <summary>System-wide paginated LLM configuration list.</summary>
     [HttpGet("llm-configs")]
@@ -242,7 +242,7 @@ public sealed class AdminController : ControllerBase
         )).ToList());
     }
 
-    // ── Webhooks ────────────────────────────────────────────────────────────────
+    // Webhooks 
 
     /// <summary>System-wide paginated webhook list.</summary>
     [HttpGet("webhooks")]
@@ -279,7 +279,7 @@ public sealed class AdminController : ControllerBase
         return Ok(new { deactivatedCount = count });
     }
 
-    // ── Cache ───────────────────────────────────────────────────────────────────
+    // Cache 
 
     /// <summary>Returns task execution cache occupancy statistics.</summary>
     [HttpGet("cache/stats")]
@@ -304,7 +304,7 @@ public sealed class AdminController : ControllerBase
         return NoContent();
     }
 
-    // ── Maintenance Mode ────────────────────────────────────────────────────────
+    // Maintenance Mode 
 
     /// <summary>Returns the current maintenance mode status.</summary>
     [HttpGet("maintenance")]
@@ -338,7 +338,7 @@ public sealed class AdminController : ControllerBase
         return NoContent();
     }
 
-    // ── System Configuration ────────────────────────────────────────────────────
+    // System Configuration
 
     /// <summary>Returns a read-only snapshot of the current system configuration.</summary>
     [HttpGet("system")]
@@ -358,7 +358,7 @@ public sealed class AdminController : ControllerBase
         ));
     }
 
-    // ── Admin Audit Log ─────────────────────────────────────────────────────────
+    // Admin Audit Log
 
     /// <summary>Returns paginated admin audit log entries with optional filters.</summary>
     [HttpGet("audit-log")]
@@ -396,7 +396,7 @@ public sealed class AdminController : ControllerBase
         )).ToList());
     }
 
-    // ── Helpers ─────────────────────────────────────────────────────────────────
+    // Helpers 
 
     private static AdminUserDetailDto MapUserDetail(AdminUserDetail u) =>
         new(u.Id, u.Username, u.Email, u.Role, u.Status, u.CreatedAt,

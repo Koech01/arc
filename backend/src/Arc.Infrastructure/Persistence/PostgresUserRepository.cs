@@ -163,7 +163,7 @@ public sealed class PostgresUserRepository : IUserRepository
         return (users, total);
     }
 
-    // ── private ───────────────────────────────────────────────────────────────
+    // private
 
     private static void BindParams(NpgsqlCommand cmd, User user)
     {

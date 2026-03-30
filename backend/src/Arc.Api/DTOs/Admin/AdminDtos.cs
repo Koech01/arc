@@ -1,6 +1,6 @@
 namespace Arc.Api.DTOs.Admin;
 
-// ── Dashboard Stats ────────────────────────────────────────────────────────────
+// Dashboard Stats 
 
 public sealed class AdminStatsResponseDto
 {
@@ -13,7 +13,7 @@ public sealed class AdminStatsResponseDto
     public int ExecutionsToday { get; set; }
 }
 
-// ── User Management ────────────────────────────────────────────────────────────
+// User Management 
 
 /// <summary>Legacy flat user row returned by GET /api/admin/users (non-paginated).</summary>
 public sealed class AdminUserDto
@@ -58,7 +58,7 @@ public sealed record UpdateUserRoleRequestDto(string Role);
 /// <summary>Request body for POST /api/admin/users/{id}/reset-password</summary>
 public sealed record AdminResetPasswordRequestDto(string NewPassword);
 
-// ── Executions ─────────────────────────────────────────────────────────────────
+// Executions 
 
 public sealed record AdminExecutionRowDto(
     string ExecutionId,
@@ -78,7 +78,7 @@ public sealed record AdminExecutionPageDto(
     int Offset
 );
 
-// ── LLM Configurations ─────────────────────────────────────────────────────────
+// LLM Configurations 
 
 public sealed record AdminLLMConfigDto(
     string Id,
@@ -90,7 +90,7 @@ public sealed record AdminLLMConfigDto(
     string OwnerEmail
 );
 
-// ── Webhooks ───────────────────────────────────────────────────────────────────
+// Webhooks 
 
 public sealed record AdminWebhookDto(
     Guid Id,
@@ -108,7 +108,7 @@ public sealed record AdminWebhookPageDto(
     int Offset
 );
 
-// ── Cache Stats ────────────────────────────────────────────────────────────────
+// Cache Stats 
 
 public sealed record AdminCacheStatsDto(
     int TotalEntries,
@@ -118,7 +118,7 @@ public sealed record AdminCacheStatsDto(
     DateTime? NewestEntryUtc
 );
 
-// ── Login History ──────────────────────────────────────────────────────────────
+// Login History 
 
 public sealed record LoginHistoryEntryDto(
     long Id,
@@ -129,7 +129,7 @@ public sealed record LoginHistoryEntryDto(
     string? UserAgent
 );
 
-// ── Audit Log ──────────────────────────────────────────────────────────────────
+// Audit Log 
 
 public sealed record AdminAuditEntryDto(
     long Id,
@@ -142,7 +142,7 @@ public sealed record AdminAuditEntryDto(
     string? UserAgent
 );
 
-// ── Maintenance Mode ───────────────────────────────────────────────────────────
+// Maintenance Mode 
 
 public sealed record MaintenanceModeStatusDto(
     bool IsEnabled,
@@ -154,7 +154,7 @@ public sealed record MaintenanceModeStatusDto(
 /// <summary>Request body for POST /api/admin/maintenance/enable</summary>
 public sealed record EnableMaintenanceModeRequestDto(string? Reason = null);
 
-// ── System Configuration ───────────────────────────────────────────────────────
+// System Configuration 
 
 public sealed record SystemConfigDto(
     string DatabaseProvider,

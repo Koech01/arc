@@ -24,7 +24,7 @@ public sealed class PostgresExecutionResultStore : IExecutionResultStore
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    // ── Canonical store - all other overloads delegate here via default interface methods ──
+    // Canonical store - all other overloads delegate here via default interface methods 
 
     public async Task StoreAsync(
         string executionId,
