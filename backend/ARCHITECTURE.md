@@ -9,7 +9,7 @@ Arc is built with Clean Architecture principles featuring strict layer separatio
 ```
 ┌─────────────────────────────────────────────────────┐
 │  Infrastructure (External Systems)                  │
-│  - PostgreSQL/SQLite repositories                   │
+│  - PostgreSQL repositories                          │
 │  - LLM provider implementations                     │
 │  - Webhook delivery, caching                        │
 │  ┌───────────────────────────────────────────────┐  │
@@ -164,47 +164,22 @@ public static IServiceCollection AddApplicationServices(this IServiceCollection 
 
 **Database Strategy:**
 
-- **PostgreSQL:** Production. Full feature support across all repositories.
-- **SQLite:** Development fallback for execution data (`execution_results`, `audit_logs`, `task_execution_cache`, `execution_templates`). All other repositories (workflows, users, preferences, LLM configs, notifications, regression gates, webhooks) use in-memory implementations when PostgreSQL is not configured.
+- **PostgreSQL:** Required for development and production. Full feature support across all repositories.
 
 Configuration:
 
 ```csharp
-if (dbProvider == "PostgreSQL" && !string.IsNullOrWhiteSpace(connectionString))
-{
-    // PostgreSQL implementations for all repositories
-    services.AddScoped<IUserRepository, PostgresUserRepository>();
-    services.AddScoped<IExecutionResultStore, PostgresExecutionResultStore>();
-    services.AddScoped<IWorkflowRepository, PostgresWorkflowRepository>();
-    services.AddScoped<IWebhookRepository, PostgresWebhookRepository>();
-    services.AddScoped<INotificationRepository, PostgresNotificationRepository>();
-    services.AddScoped<ILLMConfigurationRepository, PostgresLLMConfigurationRepository>();
-    services.AddScoped<IRegressionGateRepository, PostgresRegressionGateRepository>();
-    services.AddScoped<IGoldenExecutionStore, PostgresGoldenExecutionStore>();
-    services.AddScoped<IAdminAuditLogger, PostgresAdminAuditLogger>();
-    services.AddScoped<ILoginHistoryRepository, PostgresLoginHistoryRepository>();
-    // ... remaining Postgres repositories
-}
-else
-{
-    // SQLite for execution data
-    services.AddSingleton<IExecutionResultStore>(_ => new SqliteExecutionResultStore("./data/execution_results.db"));
-    services.AddSingleton<IAuditLogger, SqliteAuditLogger>();
-    services.AddSingleton<ITaskExecutionCache, SqliteTaskExecutionCache>();
-    services.AddSingleton<IExecutionTemplateStore>(_ => new SqliteExecutionTemplateStore("./data/execution_templates.db"));
-    services.AddSingleton<IUserRepository>(_ => new SqliteUserRepository("./data/users.db"));
-    services.AddSingleton<IPasswordResetRepository>(_ => new SqlitePasswordResetRepository("./data/password_resets.db"));
-    // In-memory for all other repositories
-    services.AddSingleton<IWorkflowRepository, InMemoryWorkflowRepository>();
-    services.AddSingleton<IUserPreferencesRepository, InMemoryUserPreferencesRepository>();
-    services.AddSingleton<ILLMConfigurationRepository, InMemoryLLMConfigurationRepository>();
-    services.AddSingleton<INotificationRepository, InMemoryNotificationRepository>();
-    services.AddSingleton<IRegressionGateRepository, InMemoryRegressionGateRepository>();
-    services.AddSingleton<IGoldenExecutionStore, InMemoryGoldenExecutionStore>();
-    services.AddSingleton<IWebhookRepository, InMemoryWebhookRepository>();
-    services.AddSingleton<IAdminAuditLogger, NullAdminAuditLogger>();
-    services.AddSingleton<ILoginHistoryRepository, NullLoginHistoryRepository>();
-}
+services.AddScoped<IUserRepository, PostgresUserRepository>();
+services.AddScoped<IExecutionResultStore, PostgresExecutionResultStore>();
+services.AddScoped<IWorkflowRepository, PostgresWorkflowRepository>();
+services.AddScoped<IWebhookRepository, PostgresWebhookRepository>();
+services.AddScoped<INotificationRepository, PostgresNotificationRepository>();
+services.AddScoped<ILLMConfigurationRepository, PostgresLLMConfigurationRepository>();
+services.AddScoped<IRegressionGateRepository, PostgresRegressionGateRepository>();
+services.AddScoped<IGoldenExecutionStore, PostgresGoldenExecutionStore>();
+services.AddScoped<IAdminAuditLogger, PostgresAdminAuditLogger>();
+services.AddScoped<ILoginHistoryRepository, PostgresLoginHistoryRepository>();
+// ... remaining Postgres repositories
 ```
 
 **Key Implementations:**
@@ -370,7 +345,7 @@ All webhook payloads are signed with HMAC-SHA256. Signature delivered in `X-Arc-
 
 ### Admin Audit Logging
 
-All admin actions are logged with: admin user ID, action name, target entity, timestamp, and result. Available only when PostgreSQL is configured (`NullAdminAuditLogger` used otherwise).
+All admin actions are logged to PostgreSQL with: admin user ID, action name, target entity, timestamp, and result.
 
 ## Logging and Observability
 
@@ -479,14 +454,13 @@ End-to-end API tests using `WebApplicationFactory<Program>`. Tests authenticate 
 
 ### Caching Strategy
 
-- **Task Execution Cache:** Deterministic task results cached indefinitely (PostgreSQL or SQLite)
+- **Task Execution Cache:** Deterministic task results cached indefinitely in PostgreSQL
 - **Admin Stats Cache:** 30-second `IMemoryCache` for dashboard statistics
 - **Rate Limiter:** In-memory per-IP fixed-window
 
 ### Database Connection Pooling
 
 - PostgreSQL: Npgsql default connection pooling
-- SQLite: Single connection per repository (development only)
 
 ### Async Pattern
 
@@ -496,7 +470,6 @@ All I/O operations are asynchronous. Async methods use the `Async` suffix.
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `Database:Provider` | `SQLite` | `PostgreSQL` or `SQLite` |
 | `ConnectionStrings:PostgreSQL` | - | PostgreSQL connection string |
 | `Jwt:SecretKey` | dev key | JWT signing key (32+ characters required) |
 | `Jwt:ExpirationMinutes` | `480` | JWT token lifetime in minutes |
@@ -518,8 +491,7 @@ All I/O operations are asynchronous. Async methods use the `Async` suffix.
 ### Development
 
 ```
-Browser (localhost:5173) → Arc.Api (localhost:5266) → SQLite (./data/*.db)
-                                                     → In-memory repositories
+Browser (localhost:5173) → Arc.Api (localhost:5266) → PostgreSQL
                                                      → LLM APIs
 ```
 

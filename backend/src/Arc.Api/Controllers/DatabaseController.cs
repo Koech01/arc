@@ -7,12 +7,12 @@ namespace Arc.Api.Controllers;
 [Route("api/[controller]")]
 public sealed class DatabaseController : ControllerBase
 {
-    private readonly IDatabaseContext? _dbContext;
+    private readonly IDatabaseContext _dbContext;
     private readonly ILogger<DatabaseController> _logger;
 
-    public DatabaseController(IServiceProvider serviceProvider, ILogger<DatabaseController> logger)
+    public DatabaseController(IDatabaseContext dbContext, ILogger<DatabaseController> logger)
     {
-        _dbContext = serviceProvider.GetService<IDatabaseContext>();
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -22,16 +22,6 @@ public sealed class DatabaseController : ControllerBase
     [HttpGet("health")]
     public async Task<IActionResult> HealthCheck()
     {
-        if (_dbContext == null)
-        {
-            return Ok(new
-            {
-                Provider = "SQLite",
-                Status = "Healthy",
-                Message = "Using SQLite file-based storage"
-            });
-        }
-
         var isHealthy = await _dbContext.HealthCheckAsync();
         
         if (isHealthy)
@@ -60,11 +50,6 @@ public sealed class DatabaseController : ControllerBase
     [HttpDelete("clear")]
     public async Task<IActionResult> ClearData()
     {
-        if (_dbContext == null)
-        {
-            return BadRequest(new { Message = "Database context not available" });
-        }
-
         try
         {
             await using var connection = await _dbContext.OpenConnectionAsync();

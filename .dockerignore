@@ -1,0 +1,14 @@
+.git
+.env
+
+frontend/node_modules
+frontend/dist
+
+backend/**/bin
+backend/**/obj
+backend/publish
+backend/src/Arc.Api/wwwroot
+
+**/.DS_Store
+**/*.user
+**/*.suo

@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.Notifications;
 
 
 /// <summary>
-/// In-memory notification repository for SQLite/development fallback.
+/// In-memory notification repository for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryNotificationRepository : INotificationRepository
 {

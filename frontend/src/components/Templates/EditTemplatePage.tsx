@@ -70,8 +70,6 @@ export function EditTemplatePage() {
     
     if (field === 'dependencies') {
       task.dependencies = value as string[];
-    } else if (field === 'config') {
-      task.config = value as Record<string, string>;
     } else if (field === 'id') {
       task.id = value as string;
     } else if (field === 'name') {

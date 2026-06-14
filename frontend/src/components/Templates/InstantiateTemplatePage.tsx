@@ -10,7 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { TemplateDetail } from '@/components/types/template';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardTitle, CardDescription } from '@/components/ui/card';
 
 
 export function InstantiateTemplatePage() {

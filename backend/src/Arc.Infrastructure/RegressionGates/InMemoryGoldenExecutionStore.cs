@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.RegressionGates;
 
 
 /// <summary>
-/// In-memory golden execution store for SQLite/development fallback.
+/// In-memory golden execution store for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryGoldenExecutionStore : IGoldenExecutionStore
 {

@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.Webhooks;
 
 
 /// <summary>
-/// In-memory webhook repository for SQLite/development fallback.
+/// In-memory webhook repository for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryWebhookRepository : IWebhookRepository
 {

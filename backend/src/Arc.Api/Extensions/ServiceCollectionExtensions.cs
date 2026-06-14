@@ -13,7 +13,6 @@ using Arc.Infrastructure.Webhooks;
 using Arc.Application.Persistence;
 using Arc.Infrastructure.Identity;
 using Arc.Infrastructure.Execution;
-using Arc.Infrastructure.Telemetry;
 using Arc.Infrastructure.Workflows;
 using Arc.Application.Orchestration;
 using Arc.Application.Notifications;
@@ -114,59 +113,34 @@ namespace Arc.Api.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            // Database provider selection
-            var dbProvider = configuration["Database:Provider"] ?? "SQLite";
             var connectionString = configuration.GetConnectionString("PostgreSQL");
 
-            if (dbProvider.Equals("PostgreSQL", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(connectionString))
+            if (string.IsNullOrWhiteSpace(connectionString))
             {
-                // PostgreSQL implementation
-                services.AddSingleton<IDatabaseContext>(sp =>
-                {
-                    var logger = sp.GetRequiredService<ILogger<PostgresDatabaseContext>>();
-                    return new PostgresDatabaseContext(connectionString, logger);
-                });
+                throw new InvalidOperationException("ConnectionStrings:PostgreSQL is required.");
+            }
 
-                services.AddScoped<IUserRepository, PostgresUserRepository>();
-                services.AddScoped<IPasswordResetRepository, PostgresPasswordResetRepository>();
-                services.AddScoped<IExecutionResultStore, PostgresExecutionResultStore>();
-                services.AddScoped<IAuditLogger, PostgresAuditLogger>();
-                services.AddScoped<ITaskExecutionCache, PostgresTaskExecutionCache>();
-                services.AddScoped<IExecutionTemplateStore, PostgresExecutionTemplateStore>();
-                services.AddScoped<IWorkflowRepository, PostgresWorkflowRepository>();
-                services.AddScoped<IWebhookRepository, PostgresWebhookRepository>();
-                services.AddScoped<INotificationRepository, PostgresNotificationRepository>();
-                services.AddScoped<IUserPreferencesRepository, PostgresUserPreferencesRepository>();
-                services.AddScoped<ILLMConfigurationRepository, PostgresLLMConfigurationRepository>();
-                services.AddScoped<ILLMConfigurationRepository, PostgresLLMConfigurationRepository>();
-                services.AddScoped<IAdminAuditLogger, PostgresAdminAuditLogger>();
-                services.AddScoped<ILoginHistoryRepository, PostgresLoginHistoryRepository>();
-                services.AddScoped<IRegressionGateRepository, PostgresRegressionGateRepository>();
-                services.AddScoped<IGoldenExecutionStore, PostgresGoldenExecutionStore>();
-            }
-            else
+            services.AddSingleton<IDatabaseContext>(sp =>
             {
-                // SQLite fallback implementation
-                services.AddSingleton<IUserRepository>(
-                    _ => new SqliteUserRepository("./data/users.db"));
-                services.AddSingleton<IPasswordResetRepository>(
-                    _ => new SqlitePasswordResetRepository("./data/password_resets.db"));
-                services.AddSingleton<IExecutionResultStore>(
-                    _ => new SqliteExecutionResultStore("./data/execution_results.db"));
-                services.AddSingleton<IAuditLogger, SqliteAuditLogger>();
-                services.AddSingleton<ITaskExecutionCache, SqliteTaskExecutionCache>();
-                services.AddSingleton<IExecutionTemplateStore>(
-                    _ => new SqliteExecutionTemplateStore("./data/execution_templates.db"));
-                services.AddSingleton<IAdminAuditLogger, NullAdminAuditLogger>();
-                services.AddSingleton<ILoginHistoryRepository, NullLoginHistoryRepository>();
-                services.AddSingleton<IWorkflowRepository, InMemoryWorkflowRepository>();
-                services.AddSingleton<IUserPreferencesRepository, InMemoryUserPreferencesRepository>();
-                services.AddSingleton<ILLMConfigurationRepository, InMemoryLLMConfigurationRepository>();
-                services.AddSingleton<INotificationRepository, InMemoryNotificationRepository>();
-                services.AddSingleton<IRegressionGateRepository, InMemoryRegressionGateRepository>();
-                services.AddSingleton<IGoldenExecutionStore, InMemoryGoldenExecutionStore>();
-                services.AddSingleton<IWebhookRepository, InMemoryWebhookRepository>();
-            }
+                var logger = sp.GetRequiredService<ILogger<PostgresDatabaseContext>>();
+                return new PostgresDatabaseContext(connectionString, logger);
+            });
+
+            services.AddScoped<IUserRepository, PostgresUserRepository>();
+            services.AddScoped<IPasswordResetRepository, PostgresPasswordResetRepository>();
+            services.AddScoped<IExecutionResultStore, PostgresExecutionResultStore>();
+            services.AddScoped<IAuditLogger, PostgresAuditLogger>();
+            services.AddScoped<ITaskExecutionCache, PostgresTaskExecutionCache>();
+            services.AddScoped<IExecutionTemplateStore, PostgresExecutionTemplateStore>();
+            services.AddScoped<IWorkflowRepository, PostgresWorkflowRepository>();
+            services.AddScoped<IWebhookRepository, PostgresWebhookRepository>();
+            services.AddScoped<INotificationRepository, PostgresNotificationRepository>();
+            services.AddScoped<IUserPreferencesRepository, PostgresUserPreferencesRepository>();
+            services.AddScoped<ILLMConfigurationRepository, PostgresLLMConfigurationRepository>();
+            services.AddScoped<IAdminAuditLogger, PostgresAdminAuditLogger>();
+            services.AddScoped<ILoginHistoryRepository, PostgresLoginHistoryRepository>();
+            services.AddScoped<IRegressionGateRepository, PostgresRegressionGateRepository>();
+            services.AddScoped<IGoldenExecutionStore, PostgresGoldenExecutionStore>();
 
             // Authentication infrastructure
             services.AddScoped<IPasswordHashingService, BCryptPasswordHashingService>();

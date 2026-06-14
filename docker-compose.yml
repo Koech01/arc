@@ -1,6 +1,20 @@
-version: '3.8'
-
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: arc_mono_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__PostgreSQL: Host=postgres;Port=5432;Database=${POSTGRES_DB:-arc_mono_db};Username=${POSTGRES_USER:-arc_mono_user};Password=${POSTGRES_PASSWORD:-arc_mono_password}
+    ports:
+      - "5266:5266"
+
   postgres:
     image: postgres:16-alpine
     container_name: arc_mono_postgres

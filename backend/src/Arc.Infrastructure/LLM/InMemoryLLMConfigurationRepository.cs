@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.LLM;
 
 
 /// <summary>
-/// In-memory LLM configuration repository for SQLite/development fallback.
+/// In-memory LLM configuration repository for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryLLMConfigurationRepository : ILLMConfigurationRepository
 {

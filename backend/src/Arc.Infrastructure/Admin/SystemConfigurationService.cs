@@ -20,8 +20,6 @@ public sealed class SystemConfigurationService : ISystemConfigurationService
 
     public SystemConfigSnapshot GetSnapshot()
     {
-        var dbProvider = _configuration["Database:Provider"] ?? "SQLite";
-
         var llmDefault = _configuration["LLM:DefaultProvider"] ??
                          (_configuration["HuggingFace:ApiKey"] is not null ? "HuggingFace" : "Fake");
 
@@ -33,7 +31,7 @@ public sealed class SystemConfigurationService : ISystemConfigurationService
         var environment = _configuration["ASPNETCORE_ENVIRONMENT"] ?? "Unknown";
 
         return new SystemConfigSnapshot(
-            DatabaseProvider: dbProvider,
+            DatabaseProvider: "PostgreSQL",
             LLMDefaultProvider: llmDefault,
             LLMDefaultModel: llmModel,
             JwtExpirationMinutes: jwtExpiry,

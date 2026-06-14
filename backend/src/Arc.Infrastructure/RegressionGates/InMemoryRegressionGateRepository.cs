@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.RegressionGates;
 
 
 /// <summary>
-/// In-memory regression gate repository for SQLite/development fallback.
+/// In-memory regression gate repository for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryRegressionGateRepository : IRegressionGateRepository
 {

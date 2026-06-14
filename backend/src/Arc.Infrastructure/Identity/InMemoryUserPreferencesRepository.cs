@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.Identity;
 
 
 /// <summary>
-/// In-memory user preferences repository for SQLite/development fallback.
+/// In-memory user preferences repository for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryUserPreferencesRepository : IUserPreferencesRepository
 {

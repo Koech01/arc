@@ -36,6 +36,7 @@ builder.Host.UseSerilog((context, services, configuration) =>
 });
 
 // Configure Kestrel to listen on all network interfaces
+builder.WebHost.UseSetting("suppressStatusMessages", "true");
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5266);
@@ -181,6 +182,11 @@ if (app.Environment.IsDevelopment())
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
+
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    app.Logger.LogInformation("Arc is ready at http://localhost:5266");
+});
 
 app.Run();
 public partial class Program { }

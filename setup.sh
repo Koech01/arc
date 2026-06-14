@@ -3,25 +3,33 @@ set -e
 
 echo "── Arc Setup ──"
 
-# .env
 if [ ! -f .env ]; then
   cp .env.example .env
   echo "✔ .env created from .env.example"
-  echo "  → Edit .env with your secrets before running the app"
+else
+  echo "✔ .env already exists"
 fi
 
-# Node deps
-echo "Installing frontend dependencies..."
-(cd frontend && npm install)
+if ! command -v docker >/dev/null 2>&1; then
+  echo "✖ Docker is not installed or not on PATH."
+  echo "  Install Docker Desktop, then run ./setup.sh again."
+  exit 1
+fi
 
-# .NET deps
-echo "Restoring backend dependencies..."
-(cd backend && dotnet restore)
+if ! docker info >/dev/null 2>&1; then
+  echo "✖ Docker is installed but not running."
+  echo "  Start Docker Desktop, wait until it says Docker is running, then run ./setup.sh again."
+  exit 1
+fi
+
+echo "✔ Docker is running"
 
 echo ""
 echo "Setup complete. Next steps:"
-echo "  1. Edit .env (JWT key, admin password, etc.)"
-echo "  2. make db        # start PostgreSQL (requires Docker)"
-echo "  3. make dev       # start both servers"
-echo "  OR"
-echo "  3. make build && make start   # production"
+echo "  make up           # build and start the Dockerized app"
+echo ""
+echo "Then open:"
+echo "  http://localhost:5266"
+echo ""
+echo "For local source development with Node and .NET installed:"
+echo "  make dev"

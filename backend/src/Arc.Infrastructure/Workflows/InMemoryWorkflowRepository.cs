@@ -5,7 +5,7 @@ namespace Arc.Infrastructure.Workflows;
 
 
 /// <summary>
-/// In-memory workflow repository for SQLite/development fallback.
+/// In-memory workflow repository for lightweight tests and local helpers.
 /// </summary>
 public sealed class InMemoryWorkflowRepository : IWorkflowRepository
 {
