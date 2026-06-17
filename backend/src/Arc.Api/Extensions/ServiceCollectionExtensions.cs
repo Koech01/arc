@@ -12,6 +12,7 @@ using Arc.Application.Workflows;
 using Arc.Infrastructure.Webhooks;
 using Arc.Application.Persistence;
 using Arc.Infrastructure.Identity;
+using Arc.Infrastructure.Demo;
 using Arc.Infrastructure.Execution;
 using Arc.Infrastructure.Workflows;
 using Arc.Application.Orchestration;
@@ -147,6 +148,7 @@ namespace Arc.Api.Extensions
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IEmailService, ConsoleEmailService>();
             services.AddScoped<DatabaseSeeder>();
+            services.AddScoped<DemoWorkspaceSeeder>();
 
             // User context for identity resolution
             services.AddHttpContextAccessor();
@@ -175,7 +177,7 @@ namespace Arc.Api.Extensions
         }
 
         /// <summary>
-        /// Initializes database schema and seeds admin account on application startup.
+        /// Initializes database schema, seeds admin account, and seeds demo workspace when configured.
         /// </summary>
         public static async Task InitializeDatabaseAsync(this IServiceProvider serviceProvider)
         {
@@ -188,6 +190,9 @@ namespace Arc.Api.Extensions
             using var scope = serviceProvider.CreateScope();
             var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
             await seeder.SeedAsync();
+
+            var demoSeeder = scope.ServiceProvider.GetRequiredService<DemoWorkspaceSeeder>();
+            await demoSeeder.SeedOnStartupAsync();
         }
     }
 }

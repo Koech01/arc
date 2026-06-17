@@ -49,6 +49,8 @@ make seed-demo
 
 Requires PostgreSQL running (via `make up` or `make db`). The script is **idempotent** — it deletes and recreates the demo user every time.
 
+**Automatic seeding (production):** when `DemoWorkspace__Enabled=true`, Arc seeds the demo workspace on startup if the demo user is missing (fresh install or after database wipe). See mini-cloud-infra docs for deployment configuration.
+
 Demo login credentials:
 
 ```text
