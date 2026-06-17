@@ -38,6 +38,32 @@ Str0ng#Arc$99
 
 Use `Ctrl+C` to stop the foreground Docker logs, or run `make up-detached` to start the stack in the background.
 
+### Demo workspace (portfolio)
+
+Seed a fully populated demo environment for visitors:
+
+```bash
+make seed-demo
+# or: dotnet run --project backend/scripts/seed-demo.csproj
+```
+
+Requires PostgreSQL running (via `make up` or `make db`). The script is **idempotent** — it deletes and recreates the demo user every time.
+
+Demo login credentials:
+
+```text
+demo@arc.com
+DemoArc2026!
+```
+
+To pre-fill these on the login page, set in `.env`:
+
+```text
+ENABLE_DEMO_LOGIN_PREFILL=true
+```
+
+When disabled or unset, the login form starts empty. Rebuild the frontend (`make up` or `make build`) after changing this flag.
+
 ## Project Structure
 
 ```

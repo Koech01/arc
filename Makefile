@@ -1,4 +1,4 @@
-.PHONY: setup setup-dev up up-detached docker-build db dev build start logs ps stop down reset clean check-docker
+.PHONY: setup setup-dev up up-detached docker-build db dev build start logs ps stop down reset clean check-docker seed-demo
 
 # First-time setup for Docker-based local runs
 setup:
@@ -59,6 +59,10 @@ stop down: check-docker
 
 reset: check-docker
 	docker compose down -v
+
+# Reset demo workspace (idempotent — safe to run anytime)
+seed-demo:
+	dotnet run --project backend/scripts/seed-demo.csproj
 
 # Remove build artifacts
 clean:

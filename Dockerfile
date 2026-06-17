@@ -1,6 +1,9 @@
 FROM node:20-alpine AS frontend-build
 WORKDIR /src
 
+ARG ENABLE_DEMO_LOGIN_PREFILL=false
+ENV ENABLE_DEMO_LOGIN_PREFILL=$ENABLE_DEMO_LOGIN_PREFILL
+
 COPY frontend/package*.json frontend/
 RUN cd frontend && npm ci
 

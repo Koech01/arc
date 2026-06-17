@@ -13,8 +13,9 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const demoPrefillEnabled = import.meta.env.ENABLE_DEMO_LOGIN_PREFILL === 'true';
+  const [email, setEmail] = useState(demoPrefillEnabled ? 'demo@arc.com' : '');
+  const [password, setPassword] = useState(demoPrefillEnabled ? 'DemoArc2026!' : '');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 

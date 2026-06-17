@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        ENABLE_DEMO_LOGIN_PREFILL: ${ENABLE_DEMO_LOGIN_PREFILL:-false}
     container_name: arc_mono_app
     depends_on:
       postgres:
